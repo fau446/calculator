@@ -15,23 +15,50 @@ function divide(a, b) {
 }
 
 function operate(a, b, operator) {
+    a = Number(a);
+    b = Number(b);
     if (operator === '+') {
-        add(a, b);
+        return add(a, b);
     } else if (operator === '-') {
-        subtract(a, b);
+        return subtract(a, b);
     } else if (operator === '*') {
-        multiply(a, b);
+        return multiply(a, b);
     } else {
-        divide(a, b);
+        return divide(a, b);
     }
 }
 
 const display = document.querySelector('#display');
 let displayValue = '';
+let firstOperand = '';
+let secondOperand = '';
+let operator = '';
+
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => button.addEventListener('click', function(e) {
-    display.textContent += e.target.innerText;
-    displayValue = displayValue.concat(e.target.innerText);
-    console.log(displayValue);
+    let value = e.target.innerText;
+    display.textContent += value;
+    
+    if (value === '/' || value === '*' || value === '-' || value === '+') {
+        firstOperand = displayValue;
+        displayValue = '';
+        operator = value;
+        console.log(`First Operand: ${firstOperand}`);
+        console.log(`Operator: ${operator}`);
+    } else if (value === '=') {
+        secondOperand = displayValue;
+        console.log(`Second Operand: ${secondOperand}`);
+        displayValue = operate(firstOperand, secondOperand, operator).toString();
+        display.textContent = displayValue;
+        firstOperand = '';
+        secondOperand = '';
+        operator = '';
+        console.log(`display: ${displayValue}`);
+    } else {
+        displayValue = displayValue.concat(value);
+    }
+    
+    //console.log(displayValue);
+    //console.log(operand);
 })
 )
