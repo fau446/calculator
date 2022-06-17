@@ -39,21 +39,31 @@ buttons.forEach(button => button.addEventListener('click', function(e) {
     let value = e.target.innerText;
     display.textContent += value;
     
-    if (value === '/' || value === '*' || value === '-' || value === '+') {
+    if ((value === '/' || value === '*' || value === '-' || value === '+') && (operator === '')) {
         firstOperand = displayValue;
         displayValue = '';
         operator = value;
         console.log(`First Operand: ${firstOperand}`);
         console.log(`Operator: ${operator}`);
-    } else if (value === '=') {
+    } else if ((value === '=') || ((value === '/' || value === '*' || value === '-' || value === '+') && (operator !== ''))) {
         secondOperand = displayValue;
         console.log(`Second Operand: ${secondOperand}`);
         displayValue = operate(firstOperand, secondOperand, operator).toString();
         display.textContent = displayValue;
-        firstOperand = '';
-        secondOperand = '';
-        operator = '';
-        console.log(`display: ${displayValue}`);
+        if (value === '='){
+            firstOperand = '';
+            secondOperand = '';
+            operator = '';
+            console.log(`display: ${displayValue}`);
+        } else {
+            firstOperand = displayValue;
+            operator = value;
+            display.textContent += operator;
+            console.log(`other operator: ${operator}`)
+            console.log(`first Operand: ${firstOperand}`);
+            console.log(`display value else: ${displayValue}`);
+            displayValue = '';
+        }
     } else {
         displayValue = displayValue.concat(value);
     }
