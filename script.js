@@ -28,6 +28,14 @@ function operate(a, b, operator) {
     }
 }
 
+function reset() {
+    displayValue = '';
+    firstOperand = '';
+    secondOperand = '';
+    operator = '';
+    display.textContent = '';
+}
+
 const display = document.querySelector('#display');
 let displayValue = '';
 let firstOperand = '';
@@ -38,8 +46,9 @@ const buttons = document.querySelectorAll('button');
 buttons.forEach(button => button.addEventListener('click', function(e) {
     let value = e.target.innerText;
     display.textContent += value;
-    
-    if ((value === '/' || value === '*' || value === '-' || value === '+') && (operator === '')) {
+    if (value == 'AC') {
+        reset();
+    } else if ((value === '/' || value === '*' || value === '-' || value === '+') && (operator === '')) {
         firstOperand = displayValue;
         displayValue = '';
         operator = value;
