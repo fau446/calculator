@@ -44,13 +44,45 @@ function checkDecimal(value) {
             displayValue = displayValue.concat(value);
         }
     } else if (operator !== '') { //checks second operand
-        console.log("Operator is not blank");
         if (displayValue.includes('.') !== true) {
             display.textContent += value;
             displayValue = displayValue.concat(value);
         }
-        console.log(`Display value = ${displayValue}`)
     }
+}
+
+function calculator(e) {
+    let value = e;
+    if (value === 'c') {
+        reset();
+    } else if ((value === '/' || value === '*' || value === '-' || value === '+') && (operator === '')) {
+        firstOperand = displayValue;
+        displayValue = '';
+        operator = value;
+        display.textContent += value;
+    } else if ((value === '=') || ((value === '/' || value === '*' || value === '-' || value === '+') && (operator !== ''))) {
+        secondOperand = displayValue;
+        displayValue = operate(firstOperand, secondOperand, operator).toString();
+        display.textContent = displayValue;
+        if (value === '='){
+            firstOperand = '';
+            secondOperand = '';
+            operator = '';
+        } else {
+            firstOperand = displayValue;
+            operator = value;
+            display.textContent += operator;
+            displayValue = '';
+        }
+    } else if (value === '.') {
+        checkDecimal(value);
+    } else if (value === '<-') {
+        
+    } else {
+        display.textContent += value;
+        displayValue = displayValue.concat(value);
+    }
+
 }
 
 const display = document.querySelector('#display');
@@ -58,49 +90,20 @@ let displayValue = '';
 let firstOperand = '';
 let secondOperand = '';
 let operator = '';
+let keybinds = '0123456789./*-+=c';
 
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => button.addEventListener('click', function(e) {
-    let value = e.target.innerText;
-    if (value == 'AC') {
-        reset();
-    } else if ((value === '/' || value === '*' || value === '-' || value === '+') && (operator === '')) {
-        firstOperand = displayValue;
-        displayValue = '';
-        operator = value;
-        display.textContent += value;
-        //console.log(`First Operand: ${firstOperand}`);
-        //console.log(`Operator: ${operator}`);
-    } else if ((value === '=') || ((value === '/' || value === '*' || value === '-' || value === '+') && (operator !== ''))) {
-        secondOperand = displayValue;
-        //console.log(`Second Operand: ${secondOperand}`);
-        displayValue = operate(firstOperand, secondOperand, operator).toString();
-        display.textContent = displayValue;
-        if (value === '='){
-            firstOperand = '';
-            secondOperand = '';
-            operator = '';
-            //console.log(`display: ${displayValue}`);
-        } else {
-            firstOperand = displayValue;
-            operator = value;
-            display.textContent += operator;
-            //console.log(`other operator: ${operator}`)
-            //console.log(`first Operand: ${firstOperand}`);
-            //console.log(`display value else: ${displayValue}`);
-            displayValue = '';
-        }
-    } else if (value === '.') {
-        checkDecimal(value);
-    } else {
-        display.textContent += value;
-        displayValue = displayValue.concat(value);
+    calculator(e.target.innerText);
+}));
+window.addEventListener('keydown', function(e) {
+    let value = e.key;
+    if (value === 'Enter') {
+        value = '=';
+    } else if (value === 'Delete') {
+        value = 'c';
     }
-
-})
-)
-
-// for limiting each operand for one decimal max, check
-// if operator is blank or not.
-// if operator is blank, check if decimal exists in first operand.
-// else check if decimal exists in second operand.
+    if (keybinds.includes(value)) {
+        calculator(value);
+    }
+});
