@@ -85,7 +85,7 @@ function calculator(e) {
 
 }
 
-const display = document.querySelector('#display');
+const display = document.querySelector('.display');
 let displayValue = '';
 let firstOperand = '';
 let secondOperand = '';
