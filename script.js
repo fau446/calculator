@@ -1,5 +1,5 @@
 function add(a, b) {
-    return a + b;
+    return ((a * 10) + (b * 10)) / 10;
 }
 
 function subtract(a, b) {
@@ -76,8 +76,6 @@ buttons.forEach(button => button.addEventListener('click', function(e) {
     } else {
         displayValue = displayValue.concat(value);
     }
-    
-    //console.log(displayValue);
-    //console.log(operand);
+
 })
 )
