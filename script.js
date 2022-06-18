@@ -36,6 +36,23 @@ function reset() {
     display.textContent = '';
 }
 
+function checkDecimal(value) {
+    if (operator === '') { //checks first operand
+        console.log("Operator is blank");
+        if (displayValue.includes('.') !== true) {
+            display.textContent += value;
+            displayValue = displayValue.concat(value);
+        }
+    } else if (operator !== '') { //checks second operand
+        console.log("Operator is not blank");
+        if (displayValue.includes('.') !== true) {
+            display.textContent += value;
+            displayValue = displayValue.concat(value);
+        }
+        console.log(`Display value = ${displayValue}`)
+    }
+}
+
 const display = document.querySelector('#display');
 let displayValue = '';
 let firstOperand = '';
@@ -73,21 +90,8 @@ buttons.forEach(button => button.addEventListener('click', function(e) {
             //console.log(`display value else: ${displayValue}`);
             displayValue = '';
         }
-    } else if (value === '.') { //limits operands to 1 decimal each
-        if (operator === '') { //checks first operand
-            console.log("Operator is blank");
-            if (displayValue.includes('.') !== true) {
-                display.textContent += value;
-                displayValue = displayValue.concat(value);
-            }
-        } else if (operator !== '') { //checks second operand
-            console.log("Operator is not blank");
-            if (displayValue.includes('.') !== true) {
-                display.textContent += value;
-                displayValue = displayValue.concat(value);
-            }
-            console.log(`Display value = ${displayValue}`)
-        }
+    } else if (value === '.') {
+        checkDecimal(value);
     } else {
         display.textContent += value;
         displayValue = displayValue.concat(value);
